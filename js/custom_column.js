@@ -16,31 +16,42 @@
             $(this).addClass("column_name-" + number2.toString());
         });
 
-        this.click(function () {
-            $(".columns_dropdown > ul").children().remove();
-            var sub_menu = '';
-            //console.log($(this).siblings().andSelf()[0].classList[1]);
+        this.bind("contextmenu", function () {
+            var sub_menu = '<div class="columns_dropdown"><ul>';
             for (var i = 0; i < $(this).siblings().andSelf().length; i++) {
-                sub_menu += '<li class="column_toggle ' + $(this).siblings().andSelf()[i].classList[1] + '">' + $(this).siblings().andSelf()[i].innerText + '</li>';
+                var check_mark = $(this).siblings().andSelf()[i].classList[1] == 'displayblock' ? 'displayblock' : 'displaynone';
+                sub_menu += '<li class="column_toggle ' + $(this).siblings().andSelf()[i].classList[2] + '"><i class="fa fa-check ' + check_mark + '" aria-hidden="true"></i> ' + $(this).siblings().andSelf()[i].innerText + '</li>';
             }
-            $(".columns_dropdown > ul").append(sub_menu);
-            $(".columns_dropdown").css({"display": "block"});
+            sub_menu += '</ul></div>';
+            $(".container").append(sub_menu);
             $(".columns_dropdown").css({ position: "absolute", top: event.pageY, left: event.pageX });
 
             $(".column_toggle").click(function () {
-                if ($(".heading." + $(this).context.classList[1]).attr('style') != undefined && $(".heading." + $(this).context.classList[1]).attr('style') == 'display: none;' && $(".heading." + $(this).context.classList[1]).attr('style') != 'display: block;') {
-                    $(".heading." + $(this).context.classList[1]).show();
-                    $(".data." + $(this).context.classList[1]).show();
+
+                if ($(".heading." + $(this).context.classList[1]).hasClass("displayblock")) {
+                    if ($(".heading.displaynone").length < 5) {
+                        $(".heading." + $(this).context.classList[1]).removeClass("displayblock " + $(this).context.classList[1]).addClass("displaynone " + $(this).context.classList[1]);
+                        $(".data." + $(this).context.classList[1]).removeClass("displayblock " + $(this).context.classList[1]).addClass("displaynone " + $(this).context.classList[1]);
+
+                        $(".column_toggle." + $(this).context.classList[1] + " > .fa-check").removeClass("displayblock").addClass("displaynone");
+                    } else {
+                        $(".container").append('<div class="toast"><label>Must Have Minimum 5 Columns.</label></div>').fadeIn();
+                        setTimeout(function () {
+                            $(".toast").fadeOut().remove();
+                        }, 3000);
+                    }
+
                 } else {
-                    $(".heading." + $(this).context.classList[1]).hide();
-                    $(".data." + $(this).context.classList[1]).hide();
+
+                    $(".heading." + $(this).context.classList[1]).removeClass("displaynone " + $(this).context.classList[1]).addClass("displayblock " + $(this).context.classList[1]);
+                    $(".data." + $(this).context.classList[1]).removeClass("displaynone " + $(this).context.classList[1]).addClass("displayblock " + $(this).context.classList[1]);
+                    $(".column_toggle." + $(this).context.classList[1] + " > .fa-check").removeClass("displaynone").addClass("displayblock");
                 }
             });
-        });
-
-        this.blur(function(){
-            console.log('blur');
-            $(".columns_dropdown").hide();
+            $(".container, .heading, .data").mouseenter(function () {
+                $(".columns_dropdown").remove();
+            });
+            return false;
         });
     });
 }(jQuery));
