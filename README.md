@@ -1,3 +1,4 @@
 # column_plugin
-Customize Columns Display.
-Right Click on the columns to customize.
+Customize Columns Display. <br>
+Right Click on the columns to customize. <br>
+If you are Interested please download from Stable.
