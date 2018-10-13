@@ -5,7 +5,7 @@
     min-width: 1024px;
     padding: 10px;
 }
-.col-md-12{
+.col-xs-12{
     padding: 0%;
 }
 .heading, .data {
@@ -26,11 +26,11 @@
     background-color: beige;
 }
 
-.col-md-12:nth-child(even) > .data{
+.col-xs-12:nth-child(even) > .data{
     background: #fff;
 }
 
-.col-md-12:nth-child(odd) > .data{
+.col-xs-12:nth-child(odd) > .data{
     background: #eaeaea;;
 }
 
@@ -43,7 +43,7 @@
     border-right: 1px solid #ccc9c9;
     /* border-bottom: 1px solid #ccc9c9;  */
 }
-.col-md-12:last-child > .data{
+.col-xs-12:last-child > .data{
     border-bottom: 1px solid #ccc9c9; 
 }
 
